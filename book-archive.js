@@ -6,30 +6,30 @@ const searchBooks = () => {
     const cardContainer = document.getElementById("card-container");
     const spinner = document.getElementById('spinner');
     cardContainer.textContent = '';
+    const bookCount = document.getElementById('book-count');
+    bookCount.innerText = '';
     if (!searchText) {
         console.log('no result');
         emptySearch.innerText='NO RESULT'
         emptySearch.style.display = ('block');
+        spinner.style.display = ("none")
     }
     else {
-        const spinner = document.getElementById('spinner');
-        spinner.style.display=('block')
+        spinner.style.display = ('block')
         emptySearch.style.display = ('none');
-        const bookCount = document.getElementById('book-count');
-        bookCount.innerText = '';
         fetch(`https://openlibrary.org/search.json?q=${searchText}`)
             .then(res => res.json())
             .then(data => displayBooks(data))
     }
-
 }
+
+
 const displayBooks = (data) => {
     console.log(data)
     const emptySearch = document.getElementById('empty-search');
     const numFound = data.numFound;
     const bookCount = document.getElementById('book-count');
     bookCount.innerText = '';
-
     console.log(numFound);
     const cardContainer = document.getElementById("card-container");
     const spinner = document.getElementById('spinner');
@@ -48,6 +48,7 @@ const displayBooks = (data) => {
             const firstPublishYear = book.first_publish_year;
             const cover_i = book.cover_i;
             const title = book.title;
+            emptySearch.style.display = ('none');
             const authorName = book.author_name;
             const div = document.createElement('div');
             div.classList.add('col');
